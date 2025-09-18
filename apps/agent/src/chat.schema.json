@@ -1,0 +1,26 @@
+{
+  "layout": { "sidebar": true, "inspector": false, "maxWidth": "xl" },
+  "composer": {
+    "placeholder": "问点什么…",
+    "shortcuts": { "sendOnEnter": true, "newLineOnShiftEnter": true },
+    "tools": [
+      { "id": "upload", "label": "文件" },
+      { "id": "voice", "label": "语音" },
+      { "id": "screenshot", "label": "截图" }
+    ]
+  },
+  "messages": {
+    "showAvatars": true,
+    "showTimestamps": false,
+    "inlineActions": ["copy", "feedback", "regenerate", "cite-toggle"]
+  },
+  "threads": { "enable": true, "pinned": true, "searchable": true },
+  "provider": {
+    "type": "openai",
+    "options": {
+      "model": "gpt-4o-mini",
+      "baseUrl": "https://api.openai.com/v1/chat/completions",
+      "apiKey": ""
+    }
+  }
+}

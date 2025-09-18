@@ -20,6 +20,9 @@ importers:
 
   apps/agent:
     dependencies:
+      '@nexus/agent-core':
+        specifier: workspace:*
+        version: link:../../packages/agent-core
       '@nexus/ui':
         specifier: workspace:*
         version: link:../../packages/ui
@@ -162,6 +165,22 @@ importers:
         specifier: ^6.1.0
         version: 6.1.0(@types/node@22.13.4)
 
+  packages/agent-core:
+    dependencies:
+      react:
+        specifier: ^19.0.0
+        version: 19.0.0
+    devDependencies:
+      '@nexus/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
+      '@types/react':
+        specifier: ^19.0.8
+        version: 19.0.8
+      typescript:
+        specifier: 5.7.3
+        version: 5.7.3
+
   packages/eslint-config:
     dependencies:
       '@typescript-eslint/eslint-plugin':
@@ -202,7 +221,13 @@ importers:
       tailwind-merge:
         specifier: ^3.0.1
         version: 3.0.1
+      tailwindcss-animate:
+        specifier: ^1.0.7
+        version: 1.0.7(tailwindcss@4.0.6)
     devDependencies:
+      '@nexus/agent-core':
+        specifier: workspace:*
+        version: link:../agent-core
       '@nexus/eslint-config':
         specifier: workspace:*
         version: link:../eslint-config

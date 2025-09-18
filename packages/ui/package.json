@@ -3,8 +3,10 @@
   "version": "0.0.0",
   "exports": {
     "./components/*": "./src/components/ui/*.tsx",
+    "./components/agent-chat/*": "./src/components/agent-chat/*.tsx",
     "./lib/utils": "./src/lib/utils.ts",
-    "./hooks/*": "./src/hooks/*.ts"
+    "./hooks/*": "./src/hooks/*.ts",
+    "./index.css": "./src/index.css"
   },
   "license": "MIT",
   "scripts": {
@@ -13,6 +15,7 @@
   "devDependencies": {
     "@nexus/eslint-config": "workspace:*",
     "@nexus/typescript-config": "workspace:*",
+    "@nexus/agent-core": "workspace:*",
     "@types/node": "^22.13.2",
     "@types/react": "^19.0.8",
     "@types/react-dom": "^19.0.3",
@@ -28,6 +31,7 @@
     "lucide-react": "^0.475.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "tailwind-merge": "^3.0.1"
+    "tailwind-merge": "^3.0.1",
+    "tailwindcss-animate": "^1.0.7"
   }
 }
