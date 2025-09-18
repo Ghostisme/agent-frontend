@@ -1,0 +1,4 @@
+{
+  "extends": "@nexus/typescript-config/vite.json",
+  "include": ["src"]
+}

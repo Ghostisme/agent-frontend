@@ -1,8 +1,0 @@
-# 以下文件夹不会被格式化
-/dist/*
-.local
-.output.js
-/node_modules/**
-**/*.svg
-**/*.sh
-/public/*
