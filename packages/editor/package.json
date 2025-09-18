@@ -1,0 +1,17 @@
+{
+  "name": "@jeffery/editor",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.ts",
+  "module": "src/index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "type": "module",
+  "keywords": [],
+  "author": "JefferyXZF",
+  "license": "ISC",
+  "dependencies": {
+    "@jeffery/shared": "workspace:^"
+  }
+}

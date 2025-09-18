@@ -1,41 +1,38 @@
+
 module.exports = {
-  plugins: ["boundaries"],
+  root: true,
+  env: {
+    browser: true,
+    es2020: true 
+  },
+  extends: [
+    'eslint:recommended',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:@typescript-eslint/recommended-requiring-type-checking',
+    'plugin:react-hooks/recommended'
+  ],
+  parser: '@typescript-eslint/parser',
+  parserOptions: {
+    ecmaVersion: 'latest',
+    sourceType: 'module',
+    project: true,
+    tsconfigRootDir: __dirname,
+    ecmaFeatures: {
+      jsx: true
+    },
+  },
+  plugins: [
+    'react-refresh',
+    // 加入 prettier 的 eslint 插件
+    "prettier"
+  ],
   rules: {
-    "boundaries/element-types": [
-      2,
-      {
-        default: "disallow",
-        rules: [
-          {
-            from: ["app"],
-            to: [
-              "shared",
-              "entities",
-              "features",
-              "widgets",
-              "pages",
-              "processes",
-            ],
-          },
-          {
-            from: ["pages"],
-            to: ["widgets", "features", "entities", "shared"],
-          },
-          { from: ["features"], to: ["entities", "shared"] },
-          { from: ["entities"], to: ["shared"] },
-        ],
-      },
+    // 注意要加上这一句，开启 prettier 自动修复的功能
+    // "prettier/prettier": "error",
+    'react-refresh/only-export-components': [
+      'warn',
+      { allowConstantExport: true },
     ],
+    '@typescript-eslint/no-non-null-assertion': 'off',
   },
-  settings: {
-    "boundaries/elements": [
-      { type: "app", pattern: "src/app/**" },
-      { type: "processes", pattern: "src/processes/**" },
-      { type: "pages", pattern: "src/pages/**" },
-      { type: "widgets", pattern: "src/widgets/**" },
-      { type: "features", pattern: "src/features/**" },
-      { type: "entities", pattern: "src/entities/**" },
-      { type: "shared", pattern: "src/shared/**" },
-    ],
-  },
-};
+}
