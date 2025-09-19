@@ -33,7 +33,7 @@ export function Composer(props: {
     <div className="space-y-2">
       <div className="flex items-center gap-2 flex-wrap">
         {tools?.map(t => (
-          <Button key={t.id} variant="secondary" size="sm" type="button" onClick={() => { /* 预留工具执行 */ }}>
+          <Button key={t.id} type='primary' onClick={() => { /* 预留工具执行 */ }}>
             {t.label}
           </Button>
         ))}
@@ -54,11 +54,11 @@ export function Composer(props: {
           }}
         />
         {!isLoading ? (
-          <Button type="button" onClick={() => doSend()} disabled={!value.trim()}>
+          <Button type="primary" onClick={() => doSend()} disabled={!value.trim()}>
             发送
           </Button>
         ) : (
-          <Button type="button" variant="outline" onClick={() => onStop?.()}>
+          <Button type='default' variant="outline" onClick={() => onStop?.()}>
             停止
           </Button>
         )}

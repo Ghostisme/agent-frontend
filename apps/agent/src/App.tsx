@@ -1,11 +1,30 @@
 import { StrictMode } from "react";
 import { createBrowserRouter, RouterProvider, Outlet, Navigate, useLocation, useNavigate, To } from "react-router-dom";
-import { ThemeProvider } from "./components/theme-provider";
+// import { ThemeProvider } from "./components/theme-provider";
 import TwoPaneLayout, { type TwoPaneLayoutSchema } from "@nexus/ui/components/TwoLayout/index";
 import { GlobalRouteGuard } from "@nexus/agent-core/auth/policy/GlobalRouteGuard.tsx";
 import { PolicyProvider } from "@nexus/agent-core/auth/policy/PolicyProvider.tsx";
 import Chat from "./pages/Chat";
 import Settings from "./pages/Settings";
+import { ThemeProvider } from "@nexus/ui/themes/ThemeProvider.tsx";
+import { lightSeed, type ThemeSpec } from "@nexus/ui/themes/tokens.ts";
+
+const theme: ThemeSpec = {
+  token: {
+    ...lightSeed,
+    // 可在此覆盖
+    colorPrimary: "#1677ff",
+    // colorText: "...",
+    // colorBgContainer: "...",
+  },
+  components: {
+    Button: {
+      controlHeight: 36,
+      // colorPrimary: "#1677ff",
+    }
+  },
+  // prefix: "nxs" // 可不传，默认就是 nxs
+};
 
 function Shell() {
   const navigate = useNavigate();
@@ -25,7 +44,10 @@ function Shell() {
   };
 
   return (
-    <ThemeProvider defaultTheme="light">
+    <ThemeProvider 
+      // defaultTheme="light"
+      theme={theme}
+    >
       {/* 关键：把 Guard 放进数据路由树内 */}
       <GlobalRouteGuard />
       <TwoPaneLayout

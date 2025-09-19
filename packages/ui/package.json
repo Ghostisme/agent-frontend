@@ -8,7 +8,8 @@
     "./lib/utils": "./src/lib/utils.ts",
     "./hooks/*": "./src/hooks/*.ts",
     "./index.css": "./src/index.css",
-    "./components/ui/": "./src/components/ui/"
+    "./components/ui/": "./src/components/ui/",
+    "./themes/*": "./src/themes/*"
   },
   "license": "MIT",
   "scripts": {

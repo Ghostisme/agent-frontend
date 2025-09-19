@@ -1,15 +1,34 @@
 import { createBrowserRouter, RouterProvider, Outlet, type RouteObject, useLocation, useNavigate, Navigate } from "react-router-dom";
 import { PolicyProvider, useSubject } from "@nexus/agent-core/auth/policy/PolicyProvider.tsx";
 import { GlobalRouteGuard } from "@nexus/agent-core/auth/policy/GlobalRouteGuard.tsx";
-import { ThemeProvider } from "./components/theme-provider";
+// import { ThemeProvider } from "./components/theme-provider";
 import TwoPaneLayout, { type TwoPaneLayoutSchema } from "@nexus/ui/components/TwoLayout/index";
 import Home from "./pages/Home";
 import Admin from "./pages/Admin";
 import Login from "./pages/Login";
 import AccessDenied from "./pages/AccessDenied";
+import { ThemeProvider } from "@nexus/ui/themes/ThemeProvider.tsx";
+import { lightSeed, type ThemeSpec } from "@nexus/ui/themes/tokens.ts";
 
 const TENANT_REQUIRED = "t1";
 const WINDOW = { start: 1710000000000, end: 1890000000000 };
+
+const theme: ThemeSpec = {
+  token: {
+    ...lightSeed,
+    // 可在此覆盖
+    colorPrimary: "#1677ff",
+    // colorText: "...",
+    // colorBgContainer: "...",
+  },
+  components: {
+    Button: {
+      controlHeight: 36,
+      // colorPrimary: "#1677ff",
+    }
+  },
+  // prefix: "nxs" // 可不传，默认就是 nxs
+};
 
 function Shell() {
   const navigate = useNavigate();
@@ -52,7 +71,10 @@ function Shell() {
   };
 
   return (
-    <ThemeProvider defaultTheme="light">
+    <ThemeProvider 
+      // defaultTheme="light"
+      theme={theme}
+    >
       <GlobalRouteGuard />
       <TwoPaneLayout
         schema={schema}

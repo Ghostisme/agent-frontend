@@ -58,25 +58,25 @@ export const buttonVariants = cva(
         // ghost: "hover:bg-accent hover:text-accent-foreground",
         // link: "text-primary underline-offset-4 hover:underline",
         default:
-          "bg-[var(--nxs-colorBgContainer)] text-[var(--nxs-colorText)] border border-[var(--nxs-colorBorder)] shadow-xs hover:border-[var(--nxs-colorPrimaryHover)]",
+          "bg-[var(--nxs-color-bg-container)] text-[var(--nxs-color-text)] border border-[var(--nxs-color-border)] shadow-xs hover:border-[var(--nxs-color-primary-hover)]",
         primary:
-          "bg-[var(--nxs-Button-colorPrimary,var(--nxs-colorPrimary))] text-[var(--nxs-colorTextLightSolid)] shadow-sm hover:bg-[var(--nxs-colorPrimaryHover)] active:bg-[var(--nxs-colorPrimaryActive)]",
+          "bg-[var(--nxs-Button-color-primary,var(--nxs-color-primary))] text-[var(--nxs-color-text-light-solid)] shadow-sm hover:bg-[var(--nxs-color-primary-hover)] active:bg-[var(--nxs-color-primary-active)]",
         destructive:
-          "bg-[var(--nxs-colorError,#ff4d4f)] text-[var(--nxs-colorTextLightSolid)] shadow-xs hover:brightness-95",
+          "bg-[var(--nxs-color-error,#ff4d4f)] text-[var(--nxs-color-text-light-solid)] shadow-xs hover:brightness-95",
         outline:
-          "border border-[var(--nxs-colorBorder)] bg-[var(--nxs-colorBgContainer)] hover:border-[var(--nxs-colorPrimaryHover)]",
-        ghost: "bg-transparent text-[var(--nxs-colorText)] hover:bg-[color-mix(in_oklab,var(--nxs-colorPrimary),transparent_92%)]",
-        link: "text-[var(--nxs-colorPrimary)] underline-offset-4 hover:underline",
+          "border border-[var(--nxs-color-border)] bg-[var(--nxs-color-bg-container)] hover:border-[var(--nxs-color-primary-hover)]",
+        ghost: "bg-transparent text-[var(--nxs-color-text)] hover:bg-[color-mix(in_oklab,var(--nxs-color-primary),transparent_92%)]",
+        link: "text-[var(--nxs-color-primary)] underline-offset-4 hover:underline",
       },
       size: {
         // default: "h-9 px-4 py-2 has-[>svg]:px-3",
         // sm: "h-8 rounded-md px-3 has-[>svg]:px-2.5",
         // lg: "h-10 rounded-md px-6 has-[>svg]:px-4",
         // icon: "size-9",
-        default: "h-[var(--nxs-Button-controlHeight,36px)] px-4 py-2 has-[>svg]:px-3",
-        sm: "h-[calc(var(--nxs-Button-controlHeight,36px)-4px)] rounded-md px-3 has-[>svg]:px-2.5",
-        lg: "h-[calc(var(--nxs-Button-controlHeight,36px)+4px)] rounded-md px-6 has-[>svg]:px-4",
-        icon: "size-[var(--nxs-Button-controlHeight,36px)]",
+        default: "h-[var(--nxs-Button-control-height,36px)] px-4 py-2 has-[>svg]:px-3",
+        sm: "h-[calc(var(--nxs-Button-control-height,36px)-4px)] rounded-md px-3 has-[>svg]:px-2.5",
+        lg: "h-[calc(var(--nxs-Button-control-height,36px)+4px)] rounded-md px-6 has-[>svg]:px-4",
+        icon: "size-[var(--nxs-Button-control-height,36px)]",
       },
     },
     defaultVariants: {
