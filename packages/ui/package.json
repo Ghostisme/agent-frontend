@@ -3,10 +3,12 @@
   "version": "0.0.0",
   "exports": {
     "./components/*": "./src/components/ui/*.tsx",
+    "./components/ui/*": "./src/components/ui/*",
     "./components/agent-chat/*": "./src/components/agent-chat/*.tsx",
     "./lib/utils": "./src/lib/utils.ts",
     "./hooks/*": "./src/hooks/*.ts",
-    "./index.css": "./src/index.css"
+    "./index.css": "./src/index.css",
+    "./components/ui/": "./src/components/ui/"
   },
   "license": "MIT",
   "scripts": {

@@ -4,10 +4,13 @@
   "type": "module",
   "license": "MIT",
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./src/index.ts",
+    "./auth/*": "./src/auth/*",
+    "./auth/policy/*": "./src/auth/policy/*"
   },
   "dependencies": {
-    "react": "^19.0.0"
+    "react": "^19.0.0",
+    "react-router-dom": "^7"
   },
   "devDependencies": {
     "@nexus/typescript-config": "workspace:*",
