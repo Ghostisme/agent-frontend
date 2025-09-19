@@ -1,107 +1,109 @@
-import { createBrowserRouter, RouterProvider, type RouteObject } from "react-router-dom";
-import { PolicyProvider } from "@nexus/agent-core/auth/policy/PolicyProvider.tsx";
+import { createBrowserRouter, RouterProvider, Outlet, type RouteObject, useLocation, useNavigate, Navigate } from "react-router-dom";
+import { PolicyProvider, useSubject } from "@nexus/agent-core/auth/policy/PolicyProvider.tsx";
 import { GlobalRouteGuard } from "@nexus/agent-core/auth/policy/GlobalRouteGuard.tsx";
+import { ThemeProvider } from "./components/theme-provider";
 import TwoPaneLayout, { type TwoPaneLayoutSchema } from "@nexus/ui/components/TwoLayout/index";
 import Home from "./pages/Home";
 import Admin from "./pages/Admin";
 import Login from "./pages/Login";
 import AccessDenied from "./pages/AccessDenied";
 
-const layoutSchema: TwoPaneLayoutSchema = {
-  sidebar: {
-    visible: true,
-    collapsible: true,
-    menu: [
-      { id: "home", label: "首页", route: "/", roles: ['user'] },
-      { id: "admin", label: "管理后台", route: "/admin", roles: ['user'] }
-    ]
-  },
-  header: { visible: true, content: <div className="font-semibold">Demo</div> },
-  maxWidth: "xl"
-};
+const TENANT_REQUIRED = "t1";
+const WINDOW = { start: 1710000000000, end: 1890000000000 };
 
-function Shell({ children }: { children: React.ReactNode }) {
+function Shell() {
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+  const { subject } = useSubject(); // 用于同步隐藏无权限菜单
+  // const hasRole = (roles?: string[]) => !roles?.length || roles.some(r => subject?.roles?.includes(r));
+
+  const canSeeAdmin = (() => {
+    const roleOk = !!subject?.roles?.includes("admin");
+    const tenantOk = subject?.tenantId === TENANT_REQUIRED;
+    const now = Date.now();
+    const timeOk = now >= WINDOW.start && now <= WINDOW.end;
+    return roleOk && tenantOk && timeOk;
+  })();
+
+  // const layoutSchema: TwoPaneLayoutSchema = {
+  //   sidebar: {
+  //     visible: true,
+  //     collapsible: true,
+  //     menu: [
+  //       { id: "home", label: "首页", route: "/", roles: ['user'], active: pathname === "/" },
+  //       { id: "admin", label: "管理后台", route: "/admin", roles: ['admin'], active: pathname.startsWith("/admin") }
+  //     ]
+  //   },
+  //   header: { visible: true, content: <div className="font-semibold">Web 子应用</div> },
+  //   maxWidth: "xl"
+  // };
+  const schema: TwoPaneLayoutSchema = {
+    sidebar: {
+      visible: true,
+      collapsible: true,
+      menu: [
+        { id: "home", label: "首页（公开）", route: "/", active: pathname === "/" },
+        // 需权限 + ABAC 的菜单项
+        { id: "admin", label: "管理（需权限）", route: "/admin", roles: ["admin"], active: pathname.startsWith("/admin") }
+      ]
+    },
+    header: { visible: true, content: <div className="font-semibold">Web 子应用</div> },
+    maxWidth: "xl"
+  };
+
   return (
-    <>
+    <ThemeProvider defaultTheme="light">
       <GlobalRouteGuard />
       <TwoPaneLayout
-        schema={layoutSchema}
+        schema={schema}
         onMenuClick={(item) => {
-          if (item.route) window.history.pushState({}, "", item.route);
-          window.dispatchEvent(new PopStateEvent("popstate"));
+          // if (item.route) window.history.pushState({}, "", item.route);
+          if (item.route) navigate(item.route);
+          // window.dispatchEvent(new PopStateEvent("popstate"));
         }}
-        canAccess={(roles) => {
-          // 简化：布局层不直接判断角色，依赖菜单 roles 控制显隐即可
-          return true;
-        }}
+        canAccess={(roles) => !roles?.length ? true : canSeeAdmin}
       >
-        {children}
+        {/* {children} */}
+        <Outlet />
       </TwoPaneLayout>
-    </>
+    </ThemeProvider>
   );
 }
 
 const routes: RouteObject[] = [
   {
     path: "/",
-    handle: {
-      policy: { anyOf: [{ rolesAny: [] }] } // 公开页面
-    },
-    element: (
-      <Shell>
-        <Home />
-      </Shell>
-    )
-  },
-  {
-    path: "/admin",
-    handle: {
-      requireAuth: true,
-      policy: { allOf: [{ rolesAny: ["admin"] }, { permsAny: ["admin:read"] }] },
-      onDenyRedirect: "/access-denied"
-    },
-    element: (
-      <Shell>
-        <Admin />
-      </Shell>
-    )
-  },
-  {
-    path: "/login",
-    element: (
-      <Shell>
-        <Login />
-      </Shell>
-    )
-  },
-  {
-    path: "/access-denied",
-    element: (
-      <Shell>
-        <AccessDenied />
-      </Shell>
-    )
-  },
-  {
-    path: "/orders",
-    handle: {
-      requireAuth: true,
-      policy: {
-        allOf: [
-          { rolesAny: ["manager", "admin"] },
-          { permsAll: ["order:write"] },
-          {
-            conditions: [
-              { name: "tenantMatch", args: { tenantId: "t1" } },
-              { name: "timeWindow", args: { start: 1710000000000, end: 1890000000000 } },
-              { name: "featureFlag", args: { key: "beta-orders" } }
+    // handle: {
+    //   policy: { anyOf: [{ rolesAny: [] }] } // 公开页面
+    // },
+    element: <Shell />,
+    children: [
+      { index: true, element: <Home />, handle: { policy: { anyOf: [{ rolesAny: [] }] } } }, // 公开
+      {
+        path: "admin",
+        element: <Admin />,
+        handle: {
+          requireAuth: true,
+          policy: {
+            allOf: [
+              { rolesAny: ["admin"] },
+              {
+                conditions: [
+                  { name: "tenantMatch", args: { tenantId: TENANT_REQUIRED } },
+                  { name: "timeWindow", args: WINDOW }
+                ]
+              }
             ]
-          }
-        ]
-      }
-    },
-    element: <Shell>...</Shell>
-  }
+          },
+          onDenyRedirect: "/access-denied"
+        }
+      },
+      { path: "login", element: <Login /> },
+      { path: "access-denied", element: <AccessDenied /> },
+      { path: "*", element: <Navigate to="/" replace /> }
+    ]
+  },
+  // { path: "*", element: <Navigate to="/" replace /> }
 ];
 
 const router = createBrowserRouter(routes);

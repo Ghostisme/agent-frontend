@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { Button } from "../ui/button";
+import Button from "../ui/Button/index";
 
 type Tool = { id: string; label: string; icon?: string };
 

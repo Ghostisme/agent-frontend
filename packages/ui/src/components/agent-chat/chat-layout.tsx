@@ -4,7 +4,8 @@ import type { UseChatReturn } from "@nexus/agent-core";
 import { MessageList } from "./message-list";
 import { Composer } from "./composer";
 import { ThreadList } from "./thread-list";
-import { MobileLayout, ResponsiveContainer } from "../ui/mobile-layout";
+import MobileLayout from "../ui/MobileLayout";
+import ResponsiveContainer from "../ui/ResponsiveContainer";
 
 type Props = {
   schema: ChatSchema;

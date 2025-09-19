@@ -11,7 +11,7 @@ const MobileLayout = ({ children, className, showSafeArea = true }: MobileLayout
   return (
     <div
       className={cn(
-        "min-h-screen bg-background text-foreground",
+        "min-h-full bg-background text-foreground",
         // 安全区域适配
         showSafeArea && [
           "pt-safe-top pb-safe-bottom pl-safe-left pr-safe-right",
