@@ -3,6 +3,7 @@ import { createBrowserRouter, RouterProvider, Outlet, Navigate, useLocation, use
 import { ThemeProvider } from "./components/theme-provider";
 import TwoPaneLayout, { type TwoPaneLayoutSchema } from "@nexus/ui/components/TwoLayout/index";
 import { GlobalRouteGuard } from "@nexus/agent-core/auth/policy/GlobalRouteGuard.tsx";
+import { PolicyProvider } from "@nexus/agent-core/auth/policy/PolicyProvider.tsx";
 import Chat from "./pages/Chat";
 import Settings from "./pages/Settings";
 
@@ -52,7 +53,18 @@ const router = createBrowserRouter([
 export default function App() {
   return (
     <StrictMode>
-      <RouterProvider router={router} />
+      <PolicyProvider
+        initialSubject={null}
+        conditions={{
+          // 可选：示例条件，后续使用 Guard/route handle.policy 可引用
+          tenantMatch: ({ subject, args }) => subject?.tenantId === args?.tenantId,
+          featureFlag: ({ args }) => typeof args?.key === "string"
+            ? !!({ "beta-orders": true } as Record<string, boolean>)[args.key]
+            : false
+        }}
+      >
+        <RouterProvider router={router} />
+      </PolicyProvider>
     </StrictMode>
   );
 }

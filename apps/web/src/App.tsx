@@ -117,8 +117,9 @@ export default function App() {
           return now >= (args?.start ?? 0) && now <= (args?.end ?? Infinity);
         },
         featureFlag: ({ args }) => {
-          const flags: any = { "beta-orders": true }; // 示例：实际接入配置或远端
-          return !!flags[args?.key];
+          const flags = { "beta-orders": true } as const;
+          const key = args?.key as keyof typeof flags | undefined;
+          return key ? flags[key] : false;
         }
       }}
     >
